@@ -137,7 +137,12 @@ try {
             if (cred.type === ECR) {
                 imageNameWithTag = `${cred.credentials.registry}/${organizationUuid}:${choreoApp}-${process.env.NEW_SHA}`;
             } else if (cred.type === GCP) {
-                imageNameWithTag = `${cred.credentials.registry}/${cred.credentials.repository}/${choreoApp}:${process.env.NEW_SHA}`;
+                const registryPassword = cred.credentials.registryPassword;
+                const keyContex = Buffer.from(registryPassword, 'base64').toString();
+                const region = cred.credentials.region;
+                const repository = cred.credentials.repository;
+                const projectId = JSON.parse(keyContex)['project_id'];
+                imageNameWithTag = `${region}-docker.pkg.dev/${projectId}/${repository}/${choreoApp}:${process.env.NEW_SHA}`;
             }
             cluster_image_tags.push({
                 registry_id: cred.registry_id,

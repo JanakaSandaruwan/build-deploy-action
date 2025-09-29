@@ -28,3 +28,11 @@ This action deploys your newly built docker images to Kubernetes clusters throug
         is-auto-deploy: true | false
         run-id: ${{ github.run_id }}
 ```
+
+## Before commiting the changes
+
+Run the following comamnds before commiting the changes
+
+1. `npm i`
+2. `ncc build index.js --license licenses.txt` - install ncc if you have not installed before
+3. Commit changes and push
